@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import 'package:second_task/app/core/values/colors.dart';
+import 'package:second_task/app/modules/home_page/view.dart';
 import 'controller.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -10,7 +11,7 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GenderController genderController = Get.put(GenderController());
+    final SignUpController signUpController = Get.put(SignUpController());
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -38,35 +39,35 @@ class SignUpPage extends StatelessWidget {
                     Center(
                         child: Text(
                       "انشاء حساب",
-                      style: TextStyle(
-                        color: const Color(0xFF20225C),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.sp,
-                        fontFamily: 'FFShamelFamily',
-                      ),
+                      style: Theme.of(context).textTheme.headlineLarge,
                     )),
                     SizedBox(
                       height: 10.h,
                     ),
-                    _buildRowWidget(
-                        "الاسم", "ادخل الاسم ", "اسم الاب", "ادخل اسم الاب"),
+                    _buildRowWidget("الاسم", "ادخل الاسم ", "اسم الاب",
+                        "ادخل اسم الاب", context),
                     SizedBox(
                       height: 10.h,
                     ),
-                    _buildRowWidget(
-                        "الجد", "ادخل اسم الجد ", "اللقب", "ادخل اللقب"),
+                    _buildRowWidget("الجد", "ادخل اسم الجد ", "اللقب",
+                        "ادخل اللقب", context),
+                    // SizedBox(
+                    //   height: 10.h,
+                    // ),
+                    _buildGenderSection(signUpController, context),
                     SizedBox(
                       height: 10.h,
                     ),
-                    _buildGenderSection(),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    _buildTextWidget("الرقم الجوال", "ادخل رقم الجوال"),
+                    _buildTextWidget(
+                        "الرقم الجوال", "ادخل رقم الجوال", context),
                     SizedBox(
                       height: 10.h,
                     ),
-                    _buildTextWidget("الرقم الهوية", "ادخل رقم الهوية"),
+                    _buildTextWidget(
+                        "الرقم الهوية", "ادخل رقم الهوية", context),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     const DropDownWidget(
                         title: "الدوله", subTitle: "قم بتحديد الدولة"),
                     SizedBox(
@@ -74,44 +75,29 @@ class SignUpPage extends StatelessWidget {
                     ),
                     const DropDownWidget(
                         title: "المحافظة", subTitle: "قم بتحديد المحافظة"),
-                    CheckboxListTile(
-                      title: RichText(
-                        text: const TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: 'الموافقة على ',
-                                style: TextStyle(color: Color(0xFFACACAC))),
-                            TextSpan(
-                                text: 'سياسة و الشروط الاستخدام',
-                                style: TextStyle(color: Color(0xFF20225C))),
-                          ],
-                        ),
-                      ),
-                      value: false,
-                      onChanged: (newValue) {},
-                      controlAffinity: ListTileControlAffinity
-                          .leading, //  <-- leading Checkbox
-                    ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    Container(
-                      width: 240.w,
-                      height: 45.h,
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFF58042),
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.white,
-                          )),
-                      child: Center(
-                        child: Text(
-                          'انشاء حساب',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            fontFamily: 'Cairo',
+                    _buildCheckBoxWidget(signUpController, context),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    GestureDetector(
+                      onTap: () => Get.to(() => const HomePage()),
+                      child: Container(
+                        width: 240.w,
+                        height: 45.h,
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.white,
+                            )),
+                        child: Center(
+                          child: Text(
+                            'انشاء حساب',
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
                       ),
@@ -123,24 +109,16 @@ class SignUpPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             children: <TextSpan>[
                               TextSpan(
                                   text: 'لدي حساب؟',
-                                  style: TextStyle(
-                                    color: Color(0xFFACACAC),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15,
-                                    fontFamily: 'FFShamelFamily',
-                                  )),
+                                  style: Theme.of(context).textTheme.bodySmall),
                               TextSpan(
                                   text: "  تسجيل الدخول",
-                                  style: TextStyle(
-                                    color:  Color(0xFFF58042),
-                                      fontWeight: FontWeight.w600,
-                                    fontSize: 15,
-                                    fontFamily: 'FFShamelFamily',
-                                  )),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium),
                             ],
                           ),
                         ),
@@ -151,32 +129,53 @@ class SignUpPage extends StatelessWidget {
               ),
             ),
           ),
+         
         ),
       ),
     );
   }
 
-  _buildTextWidget(String text, hint) {
+  _buildTextWidget(String text, hint, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          text,
-          style: TextStyle(
-            color: const Color(0xFF20225C),
-            fontWeight: FontWeight.bold,
-            fontSize: 13.sp,
-            fontFamily: 'FFShamelFamily',
-          ),
-        ),
-        _buildTextFiled(hint)
+        Text(text, style: Theme.of(context).textTheme.labelMedium),
+        _buildTextFiled(hint, context)
       ],
     );
   }
 
-  _buildGenderSection() {
-    final GenderController genderController = Get.put(GenderController());
+  _buildCheckBoxWidget(
+      SignUpController signUpController, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Obx(
+          () => Checkbox(
+            activeColor: primaryColor,
+            value: signUpController.isChecked.value,
+            onChanged: (value) {
+              signUpController.toggleChecked();
+            },
+          ),
+        ),
+        RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                  text: 'الموافقة على ',
+                  style: Theme.of(context).textTheme.bodySmall),
+              TextSpan(
+                  text: 'سياسة و الشروط الاستخدام',
+                  style: Theme.of(context).textTheme.bodyMedium),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
+  _buildGenderSection(SignUpController signUpController, BuildContext context) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -184,19 +183,18 @@ class SignUpPage extends StatelessWidget {
                 title: Text(
                   'ذكر',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
-                    fontFamily: 'FFShamelFamily',
-                    color: genderController.gender.value == Gender.male
-                        ? const Color(0xFFF58042)
-                        : const Color(0xFF20225C),
-                  ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.sp,
+                      fontFamily: 'FFShamelFamily',
+                      color: signUpController.gender.value == Gender.male
+                          ? primaryColor
+                          : secondary),
                 ),
                 value: Gender.male,
-                activeColor: const Color(0xFFF58042),
-                groupValue: genderController.gender.value,
+                activeColor: primaryColor,
+                groupValue: signUpController.gender.value,
                 onChanged: (value) {
-                  genderController.setGender(value!);
+                  signUpController.setGender(value!);
                 },
               )),
         ),
@@ -205,19 +203,18 @@ class SignUpPage extends StatelessWidget {
                 title: Text(
                   'انتى',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.sp,
-                    fontFamily: 'FFShamelFamily',
-                    color: genderController.gender.value == Gender.female
-                        ? const Color(0xFFF58042)
-                        : const Color(0xFF20225C),
-                  ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.sp,
+                      fontFamily: 'FFShamelFamily',
+                      color: signUpController.gender.value == Gender.female
+                          ? primaryColor
+                          : secondary),
                 ),
                 value: Gender.female,
-                activeColor: const Color(0xFFF58042),
-                groupValue: genderController.gender.value,
+                activeColor: primaryColor,
+                groupValue: signUpController.gender.value,
                 onChanged: (value) {
-                  genderController.setGender(value!);
+                  signUpController.setGender(value!);
                 },
               )),
         ),
@@ -225,12 +222,7 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  _buildRowWidget(
-    String str1,
-    subStr1,
-    str2,
-    subStr2,
-  ) {
+  _buildRowWidget(String str1, subStr1, str2, subStr2, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -240,19 +232,11 @@ class SignUpPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                str1,
-                style: TextStyle(
-                  color: const Color(0xFF20225C),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12.sp,
-                  fontFamily: 'FFShamelFamily',
-                ),
-              ),
+              Text(str1, style: Theme.of(context).textTheme.labelMedium),
               SizedBox(
                 height: 3.h,
               ),
-              _buildTextFiled(subStr1)
+              _buildTextFiled(subStr1, context)
             ],
           ),
         ),
@@ -265,19 +249,11 @@ class SignUpPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                str2,
-                style: TextStyle(
-                  color: const Color(0xFF20225C),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12.sp,
-                  fontFamily: 'FFShamelFamily',
-                ),
-              ),
+              Text(str2, style: Theme.of(context).textTheme.labelMedium),
               SizedBox(
                 height: 3.h,
               ),
-              _buildTextFiled(subStr2)
+              _buildTextFiled(subStr2, context)
             ],
           ),
         ),
@@ -285,20 +261,16 @@ class SignUpPage extends StatelessWidget {
     );
   }
 
-  _buildTextFiled(String hintText) {
+  _buildTextFiled(String hintText, BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.white),
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          filled: true,
-          hintStyle: TextStyle(
-              fontSize: 10.sp,
-              color: Colors.grey[400],
-              fontFamily: "FFShamelFamily"),
-          hintText: hintText,
-          fillColor: const Color(0xFFF8F9FB)),
+        filled: true,
+        hintStyle: Theme.of(context).textTheme.labelSmall,
+        hintText: hintText,
+        fillColor: const Color(0xFFF8F9FB),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      ),
     );
   }
 }
@@ -319,7 +291,7 @@ class DropDownWidget extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: const Color(0xFF20225C),
+                color: secondary,
                 fontWeight: FontWeight.bold,
                 fontSize: 15.sp,
                 fontFamily: 'FFShamelFamily',
@@ -340,15 +312,14 @@ class DropDownWidget extends StatelessWidget {
                 child: SvgPicture.asset("assets/icons/dropDown_icon.svg"),
               ),
               focusNode: FocusNode(canRequestFocus: false),
-              decoration: const InputDecoration.collapsed(hintText: ''),
+              decoration: const InputDecoration.collapsed(
+                hintText: '',
+              ),
               hint: Padding(
                 padding: EdgeInsets.only(right: 8.w, left: 8.w),
                 child: Text(
                   subTitle,
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      color: Colors.grey[400],
-                      fontFamily: "FFShamelFamily"),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ),
               items: <String>['A', 'B', 'C', 'D'].map((String value) {
