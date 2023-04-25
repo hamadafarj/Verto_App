@@ -4,11 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:second_task/app/core/ulti/themes.dart';
 import 'package:second_task/app/core/values/colors.dart';
-import 'package:second_task/app/modules/main/view.dart';
+import 'app/modules/balance_payment_page/view.dart';
 
-import 'app/modules/home_page/view.dart';
-import 'app/modules/signup_page/view.dart';
-import 'app/modules/test.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -29,7 +26,7 @@ class MyApp extends StatelessWidget {
           return GetMaterialApp(
             theme: myTheme,
             debugShowCheckedModeBanner: false,
-            home: const Main(),
+            home: const BalancePayment2(),
           );
         });
   }

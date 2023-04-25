@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: deprecated_member_use
 class ReportController extends GetxController with SingleGetTickerProviderMixin{
      late TabController tabController;
 

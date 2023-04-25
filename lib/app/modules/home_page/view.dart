@@ -70,6 +70,31 @@ class HomePage extends StatelessWidget {
                                     _buildCategriesContainer(),
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "اخر العمليات",
+                                          style: TextStyle(fontSize: 14.sp),
+                                        ),
+                                        Text(
+                                          "عرض الكل ",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    
+                                  ],
+                                ),
+                                
                               ],
                             )
                           ],

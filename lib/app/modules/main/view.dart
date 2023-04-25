@@ -5,7 +5,6 @@ import 'package:second_task/app/core/values/colors.dart';
 import 'package:second_task/app/modules/home_page/controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class Main extends GetView<HomeController> {
   const Main({Key? key}) : super(key: key);
 
@@ -47,10 +46,11 @@ Widget bottomNavigation() {
     height: 60.h,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
-      color: Colors.blueAccent,
+      color: Colors.white,
     ),
     child: Obx(() => BottomNavigationBar(
-          backgroundColor: Colors.transparent,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
           currentIndex: controller.tabIndex.value,
           onTap: (index) => controller.changeTab(index),
           selectedItemColor: primaryColor,
@@ -73,11 +73,18 @@ Widget bottomNavigation() {
                         BlendMode.srcIn,
                       ),
                     ),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     controller.tabIndex.toInt() == 0
-                        ? Text(
-                            "الرئيسية",
-                            style:
-                                TextStyle(fontSize: 10.sp, color: primaryColor),
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "الرئيسية",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 10.sp, color: primaryColor),
+                            ),
                           )
                         : const Text(""),
                   ],
@@ -85,25 +92,31 @@ Widget bottomNavigation() {
               ),
               label: "Home",
             ),
-           BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: controller.tabIndex.toInt() == 1 ? 70.w : 60,
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                                     "assets/icons/favorite.svg",
+                      "assets/icons/favorite.svg",
                       height: 18.h,
                       width: 18.h,
                       colorFilter: ColorFilter.mode(
-                        controller.tabIndex.toInt() == 1? primaryColor : hint,
+                        controller.tabIndex.toInt() == 1 ? primaryColor : hint,
                         BlendMode.srcIn,
                       ),
                     ),
+                       const SizedBox(
+                      width: 5,
+                    ),
                     controller.tabIndex.toInt() == 1
-                        ? Text(
-                            "الرئيسية",
-                            style:
-                                TextStyle(fontSize: 10.sp, color: primaryColor),
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              "الرئيسية",
+                              style: TextStyle(
+                                  fontSize: 10.sp, color: primaryColor),
+                            ),
                           )
                         : const Text(""),
                   ],
@@ -125,25 +138,31 @@ Widget bottomNavigation() {
                         BlendMode.srcIn,
                       ),
                     ),
+                       const SizedBox(
+                      width: 5,
+                    ),
                     controller.tabIndex.toInt() == 2
-                        ? Text(
-                            "الرئيسية",
-                            style:
-                                TextStyle(fontSize: 10.sp, color: primaryColor),
-                          )
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                              "الرئيسية",
+                              style:
+                                  TextStyle(fontSize: 10.sp, color: primaryColor),
+                            ),
+                        )
                         : const Text(""),
                   ],
                 ),
               ),
               label: "Statistics",
             ),
-           BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: controller.tabIndex.toInt() == 3 ? 70.w : 60,
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                       "assets/icons/personal_icon.svg",
+                      "assets/icons/personal_icon.svg",
                       height: 18.h,
                       width: 18.h,
                       colorFilter: ColorFilter.mode(
@@ -151,12 +170,18 @@ Widget bottomNavigation() {
                         BlendMode.srcIn,
                       ),
                     ),
+                       const SizedBox(
+                      width: 5,
+                    ),
                     controller.tabIndex.toInt() == 3
-                        ? Text(
-                            "الرئيسية",
-                            style:
-                                TextStyle(fontSize: 10.sp, color: primaryColor),
-                          )
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                          child: Text(
+                              "الرئيسية",
+                              style:
+                                  TextStyle(fontSize: 10.sp, color: primaryColor),
+                            ),
+                        )
                         : const Text(""),
                   ],
                 ),

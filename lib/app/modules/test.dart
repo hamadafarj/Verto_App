@@ -1,10 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:second_task/app/core/widgets/bottom_sheet_widget.dart';
-import 'package:second_task/app/core/widgets/custom_button.dart';
-import '../core/values/colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:second_task/app/modules/redorts_page/view.dart';
 
 
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  final contoller = PageController(initialPage: 1);
+
+  @override
+  void dispose() {
+    contoller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: Column(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: PageView(
+                  controller: contoller,
+                  children: const [
+                    ChartWithDataWidget(),
+                    ChartWithDataWidget(),
+                    ChartWithDataWidget()
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 /*
 
 import 'package:flutter/material.dart';
@@ -111,17 +150,7 @@ class StackOver extends StatelessWidget {
 }
 */
 
-
-
-
-
-
-
-
-
-
-
-
+/*
 
 
 class MyWidget extends StatelessWidget {
@@ -234,3 +263,4 @@ class MyWidget extends StatelessWidget {
     );
   }
 }
+*/
