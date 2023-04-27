@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:second_task/app/modules/favorite_page/view.dart';
 import 'package:second_task/app/modules/home_page/view.dart';
+import 'package:second_task/app/modules/profile_page/view.dart';
 import 'package:second_task/app/modules/redorts_page/view.dart';
 
 class HomeController extends GetxController {
   RxInt currentIndex = 0.obs;
   final CarouselController carouselController = CarouselController();
-  final tabIndex = 0.obs;
+  final  tabIndex = 0.obs;
 
   List widgets = [
     {
@@ -18,7 +20,7 @@ class HomeController extends GetxController {
     },
     {
       "id": 1,
-      "Widget":const Text("data"),
+      "Widget":const FavoritePage(),
       "icon": Icons.heart_broken_outlined,
       "title": "adf"
     },
@@ -30,7 +32,7 @@ class HomeController extends GetxController {
     },
     {
       "id": 3,
-      "Widget": const Text("data"),
+      "Widget": const ProfilePage(),
       "icon": Icons.person_outline,
       "title": "aass"
     },
@@ -42,15 +44,15 @@ class HomeController extends GetxController {
     {"name": "Subscriptions", "amount": 100.0},
     {"name": "Fees", "amount": 5.0},
   ];
-  List pieColors = [
-    Colors.blue,
-    Colors.green,
-    Colors.amber,
-    Colors.deepOrange,
-    Colors.brown,
-  ];
+  // List pieColors = [
+  //   Colors.blue,
+  //   Colors.green,
+  //   Colors.amber,
+  //   Colors.deepOrange,
+  //   Colors.brown,
+  // ];
 
   void changeTab(int index) {
-    tabIndex.value = index;
+    currentIndex.value = index;
   }
 }

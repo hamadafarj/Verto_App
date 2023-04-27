@@ -1,49 +1,103 @@
-import 'package:flutter/material.dart';
-import 'package:second_task/app/modules/redorts_page/view.dart';
 
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+// class MyWidget extends StatelessWidget {
+//    MyWidget({super.key});
 
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
-}
+//   final iconList = [
+//     "assets/icons/personal_icon.svg",
+//     "assets/icons/personal_icon.svg",
+//     "assets/icons/personal_icon.svg",
+//     "assets/icons/personal_icon.svg",
+//   ];
 
-class _MyWidgetState extends State<MyWidget> {
-  final contoller = PageController(initialPage: 1);
+//   var _bottomNavIndex = 0;
 
-  @override
-  void dispose() {
-    contoller.dispose();
-    super.dispose();
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Text('Page $_bottomNavIndex'),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         child: const Icon(
+//           Icons.brightness_3,
+//         ),
+//         onPressed: () {},
+//       ),
+//       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+//       bottomNavigationBar: Obx(() =>  AnimatedBottomNavigationBar.builder(
+//           itemCount: iconList.length,
+//           tabBuilder: (int index, bool isActive) {
+//             return Column(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 SizedBox(height: 10.h),
+//                 SvgPicture.asset(
+//                   iconList[index],
+//                   colorFilter: ColorFilter.mode(
+//                     isActive ? primaryColor : hint,
+//                     BlendMode.srcIn,
+//                   ),
+//                 ),
+//                 SizedBox(height: 10.h),
+//               ],
+//             );
+//           },
+//           activeIndex: _bottomNavIndex,
+//           splashSpeedInMilliseconds: 300,
+//           notchSmoothness: NotchSmoothness.defaultEdge,
+//           gapLocation: GapLocation.center,
+//           onTap: (index) => controller.changeTab(index),
+//         //  onTap: (index) => setState(() => _bottomNavIndex = index),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: PageView(
-                  controller: contoller,
-                  children: const [
-                    ChartWithDataWidget(),
-                    ChartWithDataWidget(),
-                    ChartWithDataWidget()
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class MyWidget extends StatefulWidget {
+//   const MyWidget({super.key});
+
+//   @override
+//   State<MyWidget> createState() => _MyWidgetState();
+// }
+
+// class _MyWidgetState extends State<MyWidget> {
+//   final contoller = PageController(initialPage: 1);
+
+//   @override
+//   void dispose() {
+//     contoller.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Directionality(
+//       textDirection: TextDirection.rtl,
+//       child: Scaffold(
+//         body: Column(
+//           children: [
+//             Expanded(
+//               child: SizedBox(
+//                 height: MediaQuery.of(context).size.height,
+//                 child: PageView(
+//                   controller: contoller,
+//                   children: const [
+//                     ChartWithDataWidget(),
+//                     ChartWithDataWidget(),
+//                     ChartWithDataWidget()
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 /*
 
 import 'package:flutter/material.dart';

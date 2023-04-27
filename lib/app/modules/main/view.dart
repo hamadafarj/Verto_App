@@ -1,3 +1,4 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,40 +6,99 @@ import 'package:second_task/app/core/values/colors.dart';
 import 'package:second_task/app/modules/home_page/controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Main extends GetView<HomeController> {
-  const Main({Key? key}) : super(key: key);
+class Main extends StatelessWidget {
+  Main({super.key});
 
+  final iconList = [
+    "assets/icons/home_icon.svg",
+    "assets/icons/favorite.svg",
+    "assets/icons/statistics.svg",
+    "assets/icons/personal_icon.svg",
+  ];
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HomeController());
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: SafeArea(
-          child: Stack(
-            children: [
-              Obx(() => IndexedStack(
-                    index: controller.tabIndex.value,
-                    children: controller.widgets
-                        .map((e) => Container(
-                              child: e["Widget"],
-                            ))
-                        .toList(),
-                  )),
-            ],
-          ),
+          child: Obx(() =>
+              controller.widgets[controller.currentIndex.value]["Widget"]),
         ),
-        bottomNavigationBar: bottomNavigation(),
         floatingActionButton: FloatingActionButton(
           backgroundColor: primaryColor,
           child: const Icon(Icons.apps),
           onPressed: () {},
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: Obx(
+          () => AnimatedBottomNavigationBar.builder(
+            itemCount: iconList.length,
+            tabBuilder: (int index, bool isActive) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 10.h),
+                  SvgPicture.asset(
+                      height: 18.h,
+                      width: 18.h,
+                    iconList[index],
+                    colorFilter: ColorFilter.mode(
+                      isActive ? primaryColor : hint,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  SizedBox(height: 15.h),
+                ],
+              );
+            },
+            activeIndex: controller.currentIndex.toInt(),
+            splashSpeedInMilliseconds: 300,
+            notchSmoothness: NotchSmoothness.defaultEdge,
+            gapLocation: GapLocation.center,
+            onTap: (index) => controller.changeTab(index.toInt()),
+          ),
+        ),
       ),
     );
   }
 }
+
+// class Main extends GetView<HomeController> {
+//   const Main({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Directionality(
+//       textDirection: TextDirection.rtl,
+//       child: Scaffold(
+//         backgroundColor: Colors.white,
+//         body: SafeArea(
+//           child: Stack(
+//             children: [
+//               Obx(() => IndexedStack(
+//                     index: controller.tabIndex.value,
+//                     children: controller.widgets
+//                         .map((e) => Container(
+//                               child: e["Widget"],
+//                             ))
+//                         .toList(),
+//                   )),
+//             ],
+//           ),
+//         ),
+//         bottomNavigationBar: bottomNavigation(),
+//         floatingActionButton: FloatingActionButton(
+//           backgroundColor: primaryColor,
+//           child: const Icon(Icons.apps),
+//           onPressed: () {},
+//         ),
+//         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+//       ),
+//     );
+//   }
+// }
 
 Widget bottomNavigation() {
   final controller = Get.put(HomeController());
@@ -106,7 +166,7 @@ Widget bottomNavigation() {
                         BlendMode.srcIn,
                       ),
                     ),
-                       const SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     controller.tabIndex.toInt() == 1
@@ -138,18 +198,18 @@ Widget bottomNavigation() {
                         BlendMode.srcIn,
                       ),
                     ),
-                       const SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     controller.tabIndex.toInt() == 2
                         ? Padding(
                             padding: const EdgeInsets.only(top: 5.0),
-                          child: Text(
+                            child: Text(
                               "الرئيسية",
-                              style:
-                                  TextStyle(fontSize: 10.sp, color: primaryColor),
+                              style: TextStyle(
+                                  fontSize: 10.sp, color: primaryColor),
                             ),
-                        )
+                          )
                         : const Text(""),
                   ],
                 ),
@@ -170,18 +230,18 @@ Widget bottomNavigation() {
                         BlendMode.srcIn,
                       ),
                     ),
-                       const SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     controller.tabIndex.toInt() == 3
                         ? Padding(
                             padding: const EdgeInsets.only(top: 5.0),
-                          child: Text(
+                            child: Text(
                               "الرئيسية",
-                              style:
-                                  TextStyle(fontSize: 10.sp, color: primaryColor),
+                              style: TextStyle(
+                                  fontSize: 10.sp, color: primaryColor),
                             ),
-                        )
+                          )
                         : const Text(""),
                   ],
                 ),
