@@ -1,4 +1,110 @@
+// ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+
+class QRCodeTest extends StatelessWidget {
+  const QRCodeTest({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          child: const Text("Click to open Qr Code"),
+          onPressed: () async {
+            final String? scannedData = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const QRScanner()),
+            );
+            if (scannedData != null) {
+              showScannedData(context, scannedData);
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  void showScannedData(BuildContext context, String scannedData) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+          title: const Text('QR Code Scanned'),
+          message: Text(scannedData),
+          actions: [
+            CupertinoActionSheetAction(
+              child: const Text('Copy'),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: scannedData));
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                const  SnackBar(content: Text('Copied to Clipboard')),
+                );
+              },
+            ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            child: Text('Cancel'),
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class QRScanner extends StatefulWidget {
+  const QRScanner({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _QRScannerState createState() => _QRScannerState();
+}
+
+class _QRScannerState extends State<QRScanner> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  late QRViewController controller;
+  late Barcode barcode;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          QRView(
+            key: qrKey,
+            onQRViewCreated: _onQRViewCreated,
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.black54,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      Navigator.pop(context, scanData.code);
+    });
+  }
+}
 
 // class MyWidget extends StatelessWidget {
 //    MyWidget({super.key});
